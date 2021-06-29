@@ -1,0 +1,31 @@
+{
+  "name": "blackthorn-assessment",
+  "version": "1.0.0",
+  "description": "Solution #3 and #4 for the the blackthorn assessment.",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "jasmine",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "watch": "node dist/app.js",
+    "postinstall": "npm run build"
+  },
+  "keywords": [
+    "blackthorn",
+    "assessment"
+  ],
+  "author": "Stephan Hartig",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.12",
+    "@types/mysql": "^2.15.18",
+    "@types/node": "^15.12.5",
+    "jasmine": "^3.7.0",
+    "typescript": "^4.3.4"
+  }
+}
