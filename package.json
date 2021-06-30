@@ -2,7 +2,6 @@
   "name": "blackthorn-assessment",
   "version": "1.0.0",
   "description": "Solution #3 and #4 for the the blackthorn assessment.",
-  "main": "dist/app.js",
   "scripts": {
     "test": "jasmine",
     "build": "tsc",
