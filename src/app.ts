@@ -53,7 +53,6 @@ conn.connect((err) => {
       console.log(`Opened MySQL connection.`);
 });
 
-//conn.query('create table Foo (FooID int not null auto_increment primary key);', (err, res) => {
 conn.query('show tables;', (err, res) => {
    console.log(JSON.stringify(res, null, '  '));
 });
