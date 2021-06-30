@@ -2,11 +2,14 @@
   "name": "blackthorn-assessment",
   "version": "1.0.0",
   "description": "Solution #3 and #4 for the the blackthorn assessment.",
+  "main": "dist/app.js",
   "scripts": {
     "test": "jasmine",
     "build": "tsc",
     "start": "node dist/app.js",
-    "create-mysql-tables": "node scripts/create-mysql-tables.js"
+    "ls": "ls",
+    "lsup": "ls ..",
+    "create-mysql-tables": "node ./scripts/create-mysql-tables.js"
   },
   "keywords": [
     "blackthorn",
