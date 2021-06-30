@@ -55,7 +55,7 @@ conn.connect((err) => {
 //
 //
 //
-conn.query('show tables;', (err, res) => {
+conn.query('create table Foo (FooID int not null auto_increment primary key);', (err, res) => {
    console.log(JSON.stringify(res, null, '  '));
 });
 
