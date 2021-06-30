@@ -8,6 +8,8 @@ function exit(reason: string): any {
    process.exit(1);
 }
 
+const PORT = process.env.PORT ?? 5000;
+
 const MYSQL_URL = process.env.CLEARDB_DATABASE_URL
    ?? exit('Env var for db url not found.');
 const MYSQL_USER = process.env.CLEARDB_DATABASE_USER
