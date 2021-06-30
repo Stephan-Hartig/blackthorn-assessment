@@ -7,8 +7,6 @@
     "test": "jasmine",
     "build": "tsc",
     "start": "node dist/app.js",
-    "ls": "ls",
-    "lsup": "ls ..",
     "create-mysql-tables": "node ./scripts/create-mysql-tables.js"
   },
   "keywords": [

@@ -9,8 +9,7 @@ npm-debug.log
 *.swp
 *.pem
 *.log
-*.js
-dist/
+dist/**/*
 
 # Docker
 Dockerfile
