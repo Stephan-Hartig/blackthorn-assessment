@@ -33,12 +33,16 @@ if (MYSQL_URL === 'localhost') {
 }
 else {
    console.log('Deployment mode detected: Will connect to ClearDB database.');
-//   conn = mysql.createConnection({
-//      host: MYSQL_URL,
+   console.log('TODO: Connect via ssl.');
+   conn = mysql.createConnection({
+      host:       MYSQL_URL,
+      user:       MYSQL_USER,
+      password:   MYSQL_PASSWORD,
+      database:   MYSQL_DATABASE
 //      ssl: {
 //         ca: fs.readFileSync(__dirname + '/mysql-ca.crt');
 //      }
-//   });
+   });
 }
 
 
