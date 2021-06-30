@@ -8,8 +8,6 @@ function exit(reason: string): any {
    process.exit(1);
 }
 
-const PORT = process.env.PORT || 5000;
-
 const MYSQL_URL = process.env.CLEARDB_DATABASE_URL
    ?? exit('Env var for db url not found.');
 const MYSQL_USER = process.env.CLEARDB_DATABASE_USER
@@ -46,7 +44,9 @@ else {
 }
 
 
-//conn.connect(() => { console.log(`Opened MySQL connection on port ${PORT}.`); });
+conn.connect(() => { console.log(`Opened MySQL connection.`); });
+
+console.log(conn.query('show tables;'));
 
 express()
 //  .use(express.static(path.join(__dirname, 'public')))
