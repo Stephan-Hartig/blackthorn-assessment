@@ -21,17 +21,7 @@ const MYSQL_DATABASE = process.env.CLEARDB_DATABASE_DATABASE
 
 let conn: mysql.Connection;
 
-if (MYSQL_URL === 'localhost') {
-   console.log('Local mode detected: Will connect to local database.');
-
-   conn = mysql.createConnection({
-      host:       MYSQL_URL,
-      user:       MYSQL_USER,
-      password:   MYSQL_PASSWORD,
-      database:   MYSQL_DATABASE
-   });
-}
-else {
+if (process.env.NODE_ENV === 'production') {
    console.log('Deployment mode detected: Will connect to ClearDB database.');
    console.log('TODO: Connect via ssl.');
    conn = mysql.createConnection({
@@ -42,6 +32,16 @@ else {
 //      ssl: {
 //         ca: fs.readFileSync(__dirname + '/mysql-ca.crt');
 //      }
+   });
+}
+else {
+   console.log('Local mode detected: Will connect to local database.');
+
+   conn = mysql.createConnection({
+      host:       MYSQL_URL,
+      user:       MYSQL_USER,
+      password:   MYSQL_PASSWORD,
+      database:   MYSQL_DATABASE
    });
 }
 
