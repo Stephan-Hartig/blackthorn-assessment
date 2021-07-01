@@ -2,14 +2,19 @@
 node_modules/
 npm-debug.log
 
+# JS output
+dist/**/*
+
 # Local development
 *.env
 *.dev
 .DS_Store
+## VIM
 *.swp
 *.pem
 *.log
-dist/**/*
+## IntelliJ
+.idea/
 
 # Docker
 Dockerfile

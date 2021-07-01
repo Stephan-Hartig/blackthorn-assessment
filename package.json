@@ -7,7 +7,7 @@
     "test": "jasmine",
     "build": "tsc",
     "start": "node dist/app.js",
-    "create-mysql-tables": "node ./scripts/create-mysql-tables.js"
+    "create-mysql-tables": "node scripts/create-mysql-tables.js"
   },
   "keywords": [
     "blackthorn",
