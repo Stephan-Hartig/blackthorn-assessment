@@ -19,7 +19,7 @@ interface CreateCarts {
  * None of the following functions have side effects aside from what is specified by the function name.
  */
 
-export async function create(conn: mysql.Connection, carts: CreateCarts): Promise<number> {  
+export async function create(conn: mysql.Pool, carts: CreateCarts): Promise<number> {
    return new Promise<number>((resolve, reject) => {
       let sql = `
          INSERT INTO Carts(discount, subtotal, taxes, total)
@@ -38,7 +38,7 @@ export async function create(conn: mysql.Connection, carts: CreateCarts): Promis
    });
 }
 
-export async function read_byId(conn: mysql.Connection, cartsID: number): Promise<Carts> {
+export async function read_byId(conn: mysql.Pool, cartsID: number): Promise<Carts> {
    return new Promise<Carts>((resolve, reject) => {
       let sql = `
          SELECT * FROM Carts
@@ -56,7 +56,7 @@ export async function read_byId(conn: mysql.Connection, cartsID: number): Promis
    });
 }
 
-export async function update_byCartsID(conn: mysql.Connection, cartsID: number, carts: Carts): Promise<void> {
+export async function update_byCartsID(conn: mysql.Pool, cartsID: number, carts: Carts): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          UPDATE Carts
@@ -77,7 +77,7 @@ export async function update_byCartsID(conn: mysql.Connection, cartsID: number, 
    });
 }
 
-export async function update_discount_byCartsID(conn: mysql.Connection, cartsID: number, discount: number): Promise<void> {
+export async function update_discount_byCartsID(conn: mysql.Pool, cartsID: number, discount: number): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          UPDATE Carts
@@ -96,7 +96,7 @@ export async function update_discount_byCartsID(conn: mysql.Connection, cartsID:
    });
 }
 
-export async function update_taxes_byCartsID(conn: mysql.Connection, cartsID: number, taxes: number): Promise<void> {
+export async function update_taxes_byCartsID(conn: mysql.Pool, cartsID: number, taxes: number): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          UPDATE Carts
@@ -115,7 +115,7 @@ export async function update_taxes_byCartsID(conn: mysql.Connection, cartsID: nu
    });
 }
 
-export async function delete_byCartsId(conn: mysql.Connection, cartsID: number): Promise<void> {
+export async function delete_byCartsId(conn: mysql.Pool, cartsID: number): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          DELETE FROM Carts

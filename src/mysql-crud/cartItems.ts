@@ -11,7 +11,7 @@ export interface CartItems {
  * None of the following functions have side effects aside from what is specified by the function name.
  */
 
-export async function create(conn: mysql.Connection, cartItems: CartItems): Promise<void> {
+export async function create(conn: mysql.Pool, cartItems: CartItems): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          INSERT INTO CartItems(cartsID, itemsID)
@@ -30,7 +30,7 @@ export async function create(conn: mysql.Connection, cartItems: CartItems): Prom
    });
 }
 
-export async function read_byIds_joinItems(conn: mysql.Connection, cartItems: CartItems): Promise<Items> {
+export async function read_byIds_joinItems(conn: mysql.Pool, cartItems: CartItems): Promise<Items> {
    return new Promise<Items>((resolve, reject) => {
       let sql = `
          SELECT Items.* FROM CartItems INNER JOIN Items
@@ -50,7 +50,7 @@ export async function read_byIds_joinItems(conn: mysql.Connection, cartItems: Ca
    });
 }
 
-export async function read_multByCartsId_joinItems(conn: mysql.Connection, cartsID: number): Promise<Items[]> {
+export async function read_multByCartsId_joinItems(conn: mysql.Pool, cartsID: number): Promise<Items[]> {
    return new Promise<Items[]>((resolve, reject) => {
       let sql = `
          SELECT Items.* FROM CartItems INNER JOIN Items
@@ -69,7 +69,7 @@ export async function read_multByCartsId_joinItems(conn: mysql.Connection, carts
    });
 }
 
-export async function delete_byCartsId(conn: mysql.Connection, cartsID: number): Promise<void> {
+export async function delete_byCartsId(conn: mysql.Pool, cartsID: number): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          DELETE FROM CartItems
@@ -87,7 +87,7 @@ export async function delete_byCartsId(conn: mysql.Connection, cartsID: number):
    });
 }
 
-export async function delete_byItemsId(conn: mysql.Connection, itemsID: number): Promise<void> {
+export async function delete_byItemsId(conn: mysql.Pool, itemsID: number): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          DELETE FROM CartItems
@@ -105,7 +105,7 @@ export async function delete_byItemsId(conn: mysql.Connection, itemsID: number):
    });
 }
 
-export async function delete_byIds(conn: mysql.Connection, cartItems: CartItems): Promise<void> {
+export async function delete_byIds(conn: mysql.Pool, cartItems: CartItems): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
          DELETE FROM CartItems
