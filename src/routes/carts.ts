@@ -151,6 +151,22 @@ export function CartsRoute(express: Express, path: string): Express {
             res.status(400).send();
          }
       })
+      .put(path + '/:cartsID([0-9]+)/items/:itemsID', async (req, res) => {
+         try {
+            const cartsID = parseInt(req.params.cartsID);
+            const itemsID = parseInt(req.params.itemsID);
+         
+            await db.cartItems.create(conn, { cartsID, itemsID });
+            
+            let carts = await _cartsUpdate(cartsID);
+         
+            res.json(await _varAppendCartItems(carts));
+         }
+         catch (_) {
+            /* TODO Differentiate between client and server error. */
+            res.status(400).send();
+         }
+      })
       .delete(path + '/:cartsID([0-9]+)/items/:itemsID', async (req, res) => {
          try {
             const cartsID = parseInt(req.params.cartsID);
