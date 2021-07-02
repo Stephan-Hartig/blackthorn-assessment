@@ -7,7 +7,7 @@ function exit(reason: string): any {
 }
 
 
-export let conn: mysql.Connection;
+export let conn: mysql.Pool;
 
 /**
  * Init the static `db.conn` connection.
@@ -19,8 +19,12 @@ export function init() {
 
       const JAWSDB_URL = process.env.JAWSDB_URL
          ?? exit('Env var for db url not found.');
+      const JAWSDB_POOL_LIMIT = parseInt(process.env.JAWSDB_POOL_LIMIT || '50');
 
-      conn = mysql.createConnection(JAWSDB_URL);
+      conn = mysql.createPool({
+         uri: JAWSDB_URL,
+         connectionLimit: JAWSDB_POOL_LIMIT
+      });
    }
    else {
       console.log('Local mode detected: Will connect to local database.');
@@ -34,7 +38,7 @@ export function init() {
       const MYSQL_DATABASE = process.env.MYSQL_DATABASE
          ?? exit('Env var for db database not found.');
 
-      conn = mysql.createConnection({
+      conn = mysql.createPool({
          host:       MYSQL_URL,
          user:       MYSQL_USER,
          password:   MYSQL_PASSWORD,

@@ -17,7 +17,7 @@
 
 ## Types Reference
 
-##### GET requests
+##### Reponse
 ```ts
 interface Items {
   itemsID: number;
@@ -35,7 +35,7 @@ interface Carts {
 }
 ```
 
-##### POST requests
+##### Body
 ```ts
 interface Items {
   name: string; /* Must be unique and cannot be a valid integer, e.g., "1337" */
