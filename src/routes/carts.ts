@@ -10,19 +10,31 @@ export interface APICarts extends db.carts.Carts {
 
 /*
  * NOTE: Some of the following private functions have side effects on the variable passed to it.
- *       If in doubt: `obj = _func(obj)`
+ *       When in doubt: `obj = _func(obj)`
  */
 async function _varAppendCartItems(carts: APICarts) {
    carts.items = await db.cartItems.read_multByCartsId_joinItems(conn, carts.cartsID);
    return carts;
 }
 async function _cartsAddItems(cartsID: number, itemsIDs: number[]) {
-   for (let itemsID of itemsIDs)
-      await db.cartItems.create(conn, { cartsID, itemsID });
+   let alreadyInCarts = (await db.cartItems.read_multByCartsId_joinItems(conn, cartsID)).map(cartItems => cartItems.itemsID);
+   
+   for (let itemsID of itemsIDs) {
+      if (alreadyInCarts.includes(itemsID))
+         continue;
+      
+      await db.cartItems.create(conn, {cartsID, itemsID});
+   }
 }
 async function _cartsRemoveItems(cartsID: number, itemsIDs: number[]) {
-   for (let itemsID of itemsIDs)
-      await db.cartItems.delete_byIds(conn, { cartsID, itemsID });
+   let alreadyInCarts = (await db.cartItems.read_multByCartsId_joinItems(conn, cartsID)).map(cartItems => cartItems.itemsID);
+   
+   for (let itemsID of itemsIDs) {
+      if (! alreadyInCarts.includes(itemsID))
+         continue;
+      
+      await db.cartItems.delete_byIds(conn, {cartsID, itemsID});
+   }
 }
 async function _cartsUpdate(cartsID: number, carts?: db.carts.Carts) {
    carts = carts ?? await db.carts.read_byId(conn, cartsID);
@@ -51,7 +63,9 @@ export function CartsRoute(express: Express, path: string): Express {
          try {
             let cartsParams: db.carts.Carts = Object.assign({
                discount: 0,
+               subtotal: 0,
                taxes: 0,
+               total: 0
             }, req.body);
             const cartsID = await db.carts.create(conn, cartsParams);
    
@@ -101,7 +115,7 @@ export function CartsRoute(express: Express, path: string): Express {
             await db.carts.delete_byCartsId(conn, cartsID);
             await db.cartItems.delete_byCartsId(conn, cartsID);
       
-            res.json();
+            res.json('');
          }
          catch (_) {
             /* TODO Differentiate between client and server error. */
@@ -112,8 +126,10 @@ export function CartsRoute(express: Express, path: string): Express {
          try {
             const cartsID = parseInt(req.params.cartsID);
          
+            let carts;
             await _cartsAddItems(cartsID, req.body);
-            const carts = await _cartsUpdate(cartsID);
+            carts = await _cartsUpdate(cartsID);
+            
             res.json(await _varAppendCartItems(carts));
          }
          catch (_) {
@@ -121,7 +137,21 @@ export function CartsRoute(express: Express, path: string): Express {
             res.status(400).send();
          }
       })
-      .delete(path + ':cartsID/items/:itemsID', async (req, res) => {
+      .delete(path + '/:cartsID([0-9]+)/items', async (req, res) => {
+         try {
+            const cartsID = parseInt(req.params.cartsID);
+         
+            await _cartsRemoveItems(cartsID, req.body);
+            await _cartsUpdate(cartsID);
+         
+            res.json('');
+         }
+         catch (_) {
+            /* TODO Differentiate between client and server error. */
+            res.status(400).send();
+         }
+      })
+      .delete(path + '/:cartsID([0-9]+)/items/:itemsID', async (req, res) => {
          try {
             const cartsID = parseInt(req.params.cartsID);
             const itemsID = parseInt(req.params.itemsID);
@@ -129,7 +159,7 @@ export function CartsRoute(express: Express, path: string): Express {
             await db.cartItems.delete_byIds(conn, { cartsID, itemsID });
             await _cartsUpdate(cartsID);
             
-            res.json();
+            res.json('');
          }
          catch (_) {
             /* TODO Differentiate between client and server error. */

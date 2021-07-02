@@ -34,38 +34,6 @@ export function ItemsRoute(express: Express, path: string): Express {
             res.status(400).send();
          }
       })
-//      .patch(path + ':itemsID([0-9]+)?name=:name', async (req, res) => {
-//         try {
-//            const { itemsID, name } = req.params;
-//            await items.update_name_byItemsID(conn, parseInt(itemsID), name);
-//            res.json(await items.read_byId(conn, parseInt(itemsID)));
-//         }
-//         catch (_) {
-//            /* TODO Differentiate between client and server error. */
-//            res.status(400).send();
-//         }
-//      })
-//      .patch(path + ':itemsID?price=:price', async (req, res) => {
-//         try {
-//            const { itemsID, price } = req.params;
-//            await items.update_price_byItemsID(conn, parseInt(itemsID), parseInt(price));
-//            res.json(await items.read_byId(conn, parseInt(itemsID)));
-//         }
-//         catch (_) {
-//            /* TODO Differentiate between client and server error. */
-//            res.status(400).send();
-//         }
-//      })
-//      .delete(path + ':itemsID', async (req, res) => {
-//         try {
-//            await items.delete_byItemsId(conn, parseInt(req.params.itemsID));
-//            res.json();
-//         }
-//         catch (_) {
-//            /* TODO Differentiate between client and server error. */
-//            res.status(400).send();
-//         }
-//      })
    ;
 }
 

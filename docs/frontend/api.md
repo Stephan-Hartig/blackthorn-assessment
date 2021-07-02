@@ -3,17 +3,15 @@
 |method |body       |URL                                |response
 |:-:    |-          |-                                  |-
 |POST   |`Items`    |`/items`                           |`Items.itemsID`
+|GET    |           |`/items?name=:name`                |`Items`
 |GET    |           |`/items/:itemsID`                  |`Items`
-|GET    |           |`/items/:name`                     |`Items`
-|PATCH  |           |`/items/:itemsID?price=:price`     |`Items`
-|DELETE |           |`/items/:itemsID`                  |
 |POST   |`Carts \| null`|`/carts`                       |`Carts.cartsID`
 |GET    |           |`/carts/:cartsID`                  |`Carts`
-|PATCH  |           |`/carts/:cartsID?discount=:discount`|`Carts`
-|PATCH  |           |`/carts/:cartsID?taxes=:taxes`     |`Carts`
+|PATCH  |`Carts \| { discount?, taxes? }`|`/carts/:cartsID`|`Carts`
 |DELETE |           |`/carts/:cartsID`                  |
 |PUT    |`[Items.itemsID, ...]`|`/carts/:cartsID/items` |`Carts`
-|GET    |           |`/carts/:cartsID/items`            |`Carts`
+|PUT    |           |`/carts/:cartsID/items/:itemsID`   |`Carts`
+|DELETE |`[Items.itemsID, ...]`|`/carts/:cartsID/items` |
 |DELETE |           |`/carts/:cartsID/items/:itemsID`   |
 
 
@@ -47,7 +45,7 @@ interface Items {
 interface Carts {
   discount?: number;
   taxes?: number;
-  items?: Items[];
+  items?: [Items.itemsID, ...];
 }
 ```
 
@@ -58,5 +56,7 @@ ID values are automatically generated in creation (POST) requests, and thus a pa
 Null values default to zero for numbers and empty array for arrays. API calls (such as GET requests) will always populate optional values with their defaults, so a GET request returning a type `Cart` will always return an object with an `Cart.items` field, a`Cart.total` field, etc.
 
 ##### Errors
-Unless specified, the response body will never be empty/null on a successful request. Instead, errors will be reported via HTTP status codes.
+Requests that accept an array of values won't fail if it values fail due to that those value already existing (or not existing in the case of a DELETE request). It is thus up to the developer to check its success.
+
+And unless specified, the response body will never be empty/null on a successful request. Instead, errors will be reported via HTTP status codes.
 

@@ -22,7 +22,7 @@ export async function create(conn: mysql.Connection, cartItems: CartItems): Prom
          if (err)
             reject(err);
    
-         if ((results as mysql.ResultSetHeader).insertId == null)
+         if ((results as mysql.ResultSetHeader)?.insertId == null)
             reject(new Error('Could not create row.'));
          
          resolve();
@@ -42,7 +42,7 @@ export async function read_byIds_joinItems(conn: mysql.Connection, cartItems: Ca
          if (err)
             reject(err);
 
-         if ((results as mysql.RowDataPacket).length > 0)
+         if (results == null || (results as mysql.RowDataPacket).length > 0)
             resolve((results as mysql.RowDataPacket)[0]);
          else
             reject(new Error('No such row.'));
@@ -60,6 +60,9 @@ export async function read_multByCartsId_joinItems(conn: mysql.Connection, carts
       conn.query(sql, (err, results) => {
          if (err)
             reject(err);
+         
+         if (results == null)
+            reject(new Error('Error finding rows.'));
 
          resolve(results as Items[]);
       });
@@ -76,7 +79,7 @@ export async function delete_byCartsId(conn: mysql.Connection, cartsID: number):
          if (err)
             reject(err);
    
-         if ((results as mysql.ResultSetHeader).affectedRows == 0)
+         if (results == null || (results as mysql.ResultSetHeader).affectedRows == 0)
             reject(new Error('Did not delete any row.'));
    
          resolve();
@@ -94,7 +97,7 @@ export async function delete_byItemsId(conn: mysql.Connection, itemsID: number):
          if (err)
             reject(err);
    
-         if ((results as mysql.ResultSetHeader).affectedRows == 0)
+         if (results == null || (results as mysql.ResultSetHeader).affectedRows == 0)
             reject(new Error('Did not delete any row.'));
    
          resolve();
@@ -113,7 +116,7 @@ export async function delete_byIds(conn: mysql.Connection, cartItems: CartItems)
          if (err)
             reject(err);
          
-         if ((results as mysql.ResultSetHeader).affectedRows == 0)
+         if (results == null || (results as mysql.ResultSetHeader).affectedRows == 0)
             reject(new Error('Did not delete any row.'));
          
          resolve();

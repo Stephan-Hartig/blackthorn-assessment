@@ -30,7 +30,7 @@ export async function create(conn: mysql.Connection, carts: CreateCarts): Promis
          if (err)
             reject(err);
 
-         if ((results as mysql.ResultSetHeader).insertId == null)
+         if ((results as mysql.ResultSetHeader)?.insertId == null)
             reject(new Error('Could not create row.'));
          
          resolve((results as mysql.ResultSetHeader).insertId);
@@ -48,7 +48,7 @@ export async function read_byId(conn: mysql.Connection, cartsID: number): Promis
          if (err)
             reject(err);
 
-         if ((results as mysql.RowDataPacket).length == 0)
+         if (results == null || (results as mysql.RowDataPacket).length == 0)
             reject(new Error('No such row.'));
          
          resolve((results as mysql.RowDataPacket)[0]);
@@ -69,7 +69,7 @@ export async function update_byCartsID(conn: mysql.Connection, cartsID: number, 
          if (err)
             reject(err);
       
-         if ((results as mysql.ResultSetHeader).affectedRows == 0)
+         if (results == null || (results as mysql.ResultSetHeader).affectedRows == 0)
             reject(new Error('Could not update row.'));
       
          resolve();
@@ -88,7 +88,7 @@ export async function update_discount_byCartsID(conn: mysql.Connection, cartsID:
          if (err)
             reject(err);
          
-         if ((results as mysql.ResultSetHeader).affectedRows == 0)
+         if (results == null || (results as mysql.ResultSetHeader).affectedRows == 0)
             reject(new Error('Could not update row.'));
          
          resolve();
@@ -107,7 +107,7 @@ export async function update_taxes_byCartsID(conn: mysql.Connection, cartsID: nu
          if (err)
             reject(err);
          
-         if ((results as mysql.ResultSetHeader).affectedRows == 0)
+         if (results == null || (results as mysql.ResultSetHeader).affectedRows == 0)
             reject(new Error('Could not update row.'));
          
          resolve();
@@ -125,7 +125,7 @@ export async function delete_byCartsId(conn: mysql.Connection, cartsID: number):
          if (err)
             reject(err);
          
-         if ((results as mysql.ResultSetHeader).affectedRows == 0)
+         if (results == null || (results as mysql.ResultSetHeader).affectedRows == 0)
             reject(new Error('Did not delete any row.'));
          
          resolve();
