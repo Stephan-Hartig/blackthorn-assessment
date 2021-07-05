@@ -16,8 +16,6 @@ export function init() {
    if (process.env.NODE_ENV === 'production') {
       console.log('Deployment mode detected: Will connect to ClearDB database.');
       console.log('TODO: Connect via ssl.'); // TODO
-      
-      console.log(process.env.JAWSDB_CERT);
 
       const JAWSDB_URL = process.env.JAWSDB_URL
          ?? exit('Env var for db url not found.');
@@ -47,5 +45,7 @@ export function init() {
          database:   MYSQL_DATABASE
       });
    }
+   
+   pool ?? exit('Could not establish MySQL pool.');
 }
 

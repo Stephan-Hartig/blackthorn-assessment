@@ -3,7 +3,7 @@ import { default as cors } from 'cors';
 
 import { RestfulRouter } from './restful-router';
 import * as crud from '../mysql/crud';
-import { pool } from '../bootstrap/mysql-connection';
+import { pool } from '../globals/mysql-connection';
 
 export function init(): Express {
    let app: Express = express()
@@ -14,33 +14,71 @@ export function init(): Express {
    
    RestfulRouter.build(app)
       
-      /* Items */
-      .post('/api/items',
-         (params, body) => crud.itemsCreate(pool, body))
-      .get('/api/items/:itemsID([0-9]+)',
-         (params) => crud.itemsRead(pool, params.itemsID))
-      .get('/api/items/:name',
-         (params) => crud.itemsRead(pool, params.name))
-   
-      /* Shopping cart. */
-      .post('/api/carts',
-         (params, body) => crud.cartsCreate(pool, body))
-      .get('/api/carts/:cartsID([0-9]+)',
-         (params) => crud.cartsRead(pool, params.cartsID))
-      .patch('/api/carts/:cartsID([0-9]+)',
-         (params, body) => crud.cartsUpdate(pool, params.cartsID, body))
-      .delete('/api/carts/:cartsID([0-9]+)',
-         (params) => crud.cartsDelete(pool, params.cartsID))
+      /***** Items *****/
+      .post({
+         route: '/api/items',
+         logic: (params, body) => crud.itemsCreate(pool, body),
+         deleteCache: true
+      })
+      .get({
+         route: '/api/items/:itemsID([0-9]+)',
+         logic: (params) => crud.itemsRead(pool, params.itemsID),
+         getCache: true
+      })
+      .get({
+         route: '/api/items/:name',
+         logic: (params) => crud.itemsRead(pool, params.name),
+         getCache: true
+      })
       
-      /* Shopping cart items. */
-      .get('/api/carts/:cartsID([0-9]+)/items',
-         (params) => crud.carts_itemsRead(pool, params.cartsID))
-      .post('/api/carts/:cartsID([0-9]+)/items/:itemsID([0-9]+)',
-         (params) => crud.carts_itemsCreate(pool, params.cartsID, params.itemsID))
-      .get('/api/carts/:cartsID([0-9]+)/items/:itemsID([0-9]+)',
-         (params) => crud.carts_itemsRead(pool, params.cartsID, params.itemsID))
-      .delete('/api/carts/:cartsID([0-9]+)/items/:itemsID([0-9]+)',
-         (params) => crud.carts_itemsDelete(pool, params.cartsID, params.itemsID))
+      
+   
+      
+      /***** Shopping cart. *****/
+      .post({
+         route: '/api/carts',
+         logic: (params, body) => crud.cartsCreate(pool, body)
+      })
+      .get({
+         route: '/api/carts/:cartsID([0-9]+)',
+         logic: (params) => crud.cartsRead(pool, params.cartsID),
+         getCache: true
+      })
+      .patch({
+         route: '/api/carts/:cartsID([0-9]+)',
+         logic: (params, body) => crud.cartsUpdate(pool, params.cartsID, body),
+         deleteCache: true
+      })
+      .delete({
+         route: '/api/carts/:cartsID([0-9]+)',
+         logic: (params) => crud.cartsDelete(pool, params.cartsID),
+         deleteCache: true
+      })
+      
+      
+      
+   
+      /***** Shopping cart items. *****/
+      .get({
+         route: '/api/carts/:cartsID([0-9]+)/items',
+         logic: (params) => crud.carts_itemsRead(pool, params.cartsID),
+         getCache: true
+      })
+      .post({
+         route: '/api/carts/:cartsID([0-9]+)/items/:itemsID([0-9]+)',
+         logic: (params) => crud.carts_itemsCreate(pool, params.cartsID, params.itemsID),
+         deleteCache: params => [`/api/carts/${params.cartsID}/items`]
+      })
+      .get({
+         route: '/api/carts/:cartsID([0-9]+)/items/:itemsID([0-9]+)',
+         logic: (params) => crud.carts_itemsRead(pool, params.cartsID, params.itemsID),
+         getCache: true
+      })
+      .delete({
+         route: '/api/carts/:cartsID([0-9]+)/items/:itemsID([0-9]+)',
+         logic: (params) => crud.carts_itemsDelete(pool, params.cartsID, params.itemsID),
+         deleteCache: params => [`/api/carts/${params.cartsID}`, `/api/carts/${params.cartsID}/items`]
+      })
    ;
 
    return app;
