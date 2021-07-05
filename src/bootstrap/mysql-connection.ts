@@ -17,20 +17,15 @@ export function init() {
       console.log('Deployment mode detected: Will connect to ClearDB database.');
       console.log('TODO: Connect via ssl.'); // TODO
       
+      console.log(process.env.JAWSDB_CERT);
 
       const JAWSDB_URL = process.env.JAWSDB_URL
          ?? exit('Env var for db url not found.');
       const JAWSDB_POOL_LIMIT = parseInt(process.env.JAWSDB_POOL_LIMIT || '50');
-      
-      const JAWSDB_CERT = process.env.JAWSDB_CERT
-         ?? exit('Env var for db cert not found.');
 
       pool = mysql.createPool({
          uri: JAWSDB_URL,
-         connectionLimit: JAWSDB_POOL_LIMIT,
-         ssl: {
-            ca: JAWSDB_CERT
-         }
+         connectionLimit: JAWSDB_POOL_LIMIT
       });
    }
    else {
