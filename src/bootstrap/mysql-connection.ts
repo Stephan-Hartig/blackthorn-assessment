@@ -7,7 +7,7 @@ function exit(reason: string): any {
 }
 
 
-export let conn: mysql.Pool;
+export let pool: mysql.Pool;
 
 /**
  * Init the static `db.conn` connection.
@@ -16,12 +16,14 @@ export function init() {
    if (process.env.NODE_ENV === 'production') {
       console.log('Deployment mode detected: Will connect to ClearDB database.');
       console.log('TODO: Connect via ssl.'); // TODO
+      
+      console.log(process.env.JAWSDB_CERT);
 
       const JAWSDB_URL = process.env.JAWSDB_URL
          ?? exit('Env var for db url not found.');
       const JAWSDB_POOL_LIMIT = parseInt(process.env.JAWSDB_POOL_LIMIT || '50');
 
-      conn = mysql.createPool({
+      pool = mysql.createPool({
          uri: JAWSDB_URL,
          connectionLimit: JAWSDB_POOL_LIMIT
       });
@@ -38,7 +40,7 @@ export function init() {
       const MYSQL_DATABASE = process.env.MYSQL_DATABASE
          ?? exit('Env var for db database not found.');
 
-      conn = mysql.createPool({
+      pool = mysql.createPool({
          host:       MYSQL_URL,
          user:       MYSQL_USER,
          password:   MYSQL_PASSWORD,

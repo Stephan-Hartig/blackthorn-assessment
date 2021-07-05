@@ -1,7 +1,7 @@
 import { Express } from 'express';
 
-import * as db from './mysql-connection';
-import * as routing from './route-handler';
+import * as db from './bootstrap/mysql-connection';
+import * as routing from './routes/route-handler';
 
 
 
@@ -10,7 +10,7 @@ import * as routing from './route-handler';
 const PORT = process.env.PORT ?? 5000;
 
 
-/* Init the static `db.conn` connection. */
+/* Init the static `db.pool` connection. */
 
 db.init();
 

@@ -1,0 +1,20 @@
+@startuml
+
+title Project
+
+database "MySQL (JawsDB)" as mysql
+
+node Node {
+   rectangle "Prepared SQL statements" as orm
+   rectangle "CRUD interface" as crud
+   rectangle "Router" as router
+}
+
+cloud "Web (Heroku)" as web
+
+web --> router
+router --> crud
+crud --> orm
+orm --> mysql
+
+@enduml

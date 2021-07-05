@@ -1,5 +1,1 @@
-@startuml
-
-!define table(x) class x << (T,#FFAAAA) >>!define primary_key(x) <b>x</b>hide methodshide stereotypestable(CartItems) {    primary_key(cartsID)    primary_key(itemsID)}table(Carts) {    primary_key(cartsID)    discount    subtotal**    taxes**    total**}table(Items) {    primary_key(itemsID)    name    price}CartItems --|> CartsCartItems --|> Itemslegend    |= modifier  |= Note |    | col        | Regular column |    | <b>col</b> | Primary key |    | col**      | Column contains redundant data |endlegend
-
-@enduml
+@startuml!define table(x) class x << (T,#FFAAAA) >>!define primary_key(x) <b>x</b>hide methodshide stereotypestable(CartItems) {    primary_key(cartsID)    primary_key(itemsID)}table(Carts) {    primary_key(cartsID)    discount    subtotal**    taxes    total**}table(Items) {    primary_key(itemsID)    name    price}CartItems --|> CartsCartItems --|> Itemslegend    |= modifier  |= Note |    | col        | Regular column |    | <b>col</b> | Primary key |    | col**      | Column contains redundant data |endlegend@enduml
