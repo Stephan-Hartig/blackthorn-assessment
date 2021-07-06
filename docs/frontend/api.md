@@ -27,16 +27,16 @@ interface Item {
 
 interface Cart {
   cartsID: number;
-  subtotal: number;
-  discount: number;
-  taxes: number;
-  total: number;
+  subtotal: number = 0;
+  discount: number = 0;
+  taxes: number = 0;
+  total: number = 0;
 }
 ```
 
 
 ##### Ignored values
-Likewise, any attributed passed but not specified in the documentation will be ignored.
+Any attribute passed, but not specified in the documentation, will be ignored.
 
 ##### Optional values
 Null values default to zero for numbers and empty array for arrays. API calls (such as GET requests) will always populate optional values with their defaults, so a GET request returning a type `Cart` will always return an object with a `Cart.subtotal` field, a`Cart.total` field, etc.
