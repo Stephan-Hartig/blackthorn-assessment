@@ -46,10 +46,10 @@ Run `$ npm i` to install.
 ## Benchmarks
 
 ##### Apache Benchmark
-On a static URL, Apache benchmark puts this at about 250 requests per second on Heroku. On a local machine this was about 2000 requests per second. Of course, real world requests are more varying, and thus not everything will be available cached.
+On a static URL, Apache benchmark puts this at ~250 requests per second on Heroku. On a local machine this will be wildly different (~2000 rps). Of course, real world requests are more varying, and thus not everything will be available cached.
 
 ##### Locust
-Run `$ npm bench` to test. This requires Python  and its corresponding Locust package to run. After running that command, go to `localhost:8089` in a web browser to access the load-test interface.
+Run `$ npm bench` to test. This requires Python  and its corresponding Locust package to run. After running that command, go to `localhost:8089` in a web browser to access the load-test interface. The results should still be ~250 rps.
 
 
 [api]: ./docs/frontend/api.md

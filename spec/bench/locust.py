@@ -34,7 +34,6 @@ class InteractiveShopper(WindowShopper):
             try:
                 self.itemsViewing = response.json()
                 randItemsID = self.itemsViewing[randrange(len(self.itemsViewing))]['itemsID']
-                print(self.itemIDs)
                 if not any(randItemsID == itemID for itemID in self.itemIDs):
                     self.client.post(f'/api/carts/{self.cartsID}/items/{randItemsID}')
                     self.itemIDs.append(randItemsID)
