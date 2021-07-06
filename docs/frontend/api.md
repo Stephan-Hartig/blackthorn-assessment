@@ -2,17 +2,17 @@
 
 |method |body       |URL                                |response
 |:-:    |-          |-                                  |-
-|GET    |           |`/items`                           |`Item[]`
-|GET    |           |`/items/:itemsID`                  |`Item`
-|GET    |           |`/items/:name`                     |`Item`
-|POST   |           |`/carts`                           |`Cart.cartsID`
-|POST   |`{ discount?, taxes? }`|`/carts`               |`Cart.cartsID`
-|GET    |           |`/carts/:cartsID`                  |`Cart`
-|PATCH  |`{ discount?, taxes? }`|`/carts/:cartsID`      |`Cart`
-|DELETE |           |`/carts/:cartsID`                  |
-|GET    |           |`/carts/:cartsID/items`            |`Item[]`
-|PUT    |           |`/carts/:cartsID/items/:itemsID`   |`Cart`
-|DELETE |           |`/carts/:cartsID/items/:itemsID`   |
+|GET    |           |`/api/items`                           |`Item[]`
+|GET    |           |`/api/items/:itemsID`                  |`Item`
+|GET    |           |`/api/items/:name`                     |`Item`
+|POST   |           |`/api/carts`                           |`Cart.cartsID`
+|POST   |`{ discount?, taxes? }`|`/api/carts`               |`Cart.cartsID`
+|GET    |           |`/api/carts/:cartsID`                  |`Cart`
+|PATCH  |`{ discount?, taxes? }`|`/api/carts/:cartsID`      |`Cart`
+|DELETE |           |`/api/carts/:cartsID`                  |
+|GET    |           |`/api/carts/:cartsID/items`            |`Item[]`
+|PUT    |           |`/api/carts/:cartsID/items/:itemsID`   |`Cart`
+|DELETE |           |`/api/carts/:cartsID/items/:itemsID`   |
 
 
 ## Types Reference

@@ -9,7 +9,7 @@ export function init(): Express {
    let app: Express = express()
       .use(cors())
       .use(express.json())
-      .get('/', (_, res) => { res.send("Use '/api/...' to access the API.") })
+      .get('/', (_, res) => { res.send("All API requests should be routed under '/api/...'. The docs can be found <a href='https://github.com/Stephan-Hartig/blackthorn-assessment'>here</a>.") })
    ;
    
    RestfulRouter.build(app)
