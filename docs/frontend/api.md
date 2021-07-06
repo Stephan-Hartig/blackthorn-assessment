@@ -2,7 +2,7 @@
 
 |method |body       |URL                                |response
 |:-:    |-          |-                                  |-
-|POST   |`{ name, price }`|`/items`                     |`Item.itemsID`
+|GET    |           |`/items`                           |`Item[]`
 |GET    |           |`/items/:itemsID`                  |`Item`
 |GET    |           |`/items/:name`                     |`Item`
 |POST   |           |`/carts`                           |`Cart.cartsID`
@@ -21,7 +21,7 @@
 ```ts
 interface Item {
   itemsID: number;
-  name: string; /* Must be unique and cannot be a valid integer, e.g., "1337" */
+  name: string; /* Must be unique and not be a valid integer, e.g., "123" */
   price: number;
 }
 
@@ -36,8 +36,6 @@ interface Cart {
 
 
 ##### Ignored values
-ID values are automatically generated in creation (POST) requests, and thus an ID value passed in the body of such a request will be ignored.
-
 Likewise, any attributed passed but not specified in the documentation will be ignored.
 
 ##### Optional values

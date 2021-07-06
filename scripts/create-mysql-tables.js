@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 else {
    console.log('Local mode detected: Will connect to local database.');
 
-   const MYSQL_URL = process.env.MYSQL_URL
+   const MYSQL_HOST = process.env.MYSQL_HOST
       ?? exit('Env var for db url not found.');
    const MYSQL_USER = process.env.MYSQL_USER
       ?? exit('Env var for db user not found.');
@@ -43,7 +43,7 @@ else {
       ?? exit('Env var for db database not found.');
 
    conn = mysql.createConnection({
-      host:       MYSQL_URL,
+      host:       MYSQL_HOST,
       user:       MYSQL_USER,
       password:   MYSQL_PASSWORD,
       database:   MYSQL_DATABASE

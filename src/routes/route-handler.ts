@@ -70,7 +70,7 @@ export function init(): Express {
          logic: (params) => crud.carts_itemsRead(pool, params.cartsID),
          getCache: true
       })
-      .post({
+      .put({
          route: '/api/carts/:cartsID([0-9]+)/items/:itemsID([0-9]+)',
          logic: (params) => crud.carts_itemsCreate(pool, params.cartsID, params.itemsID),
          deleteCache: params => [`/api/carts/${params.cartsID}/items`]
