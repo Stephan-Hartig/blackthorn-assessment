@@ -51,8 +51,6 @@ export class RestfulRouter {
                   (typeof options.deleteCache === 'function') ? options.deleteCache(req.params) :
                   [req.url];
                
-               console.log(urls);
-               
                for (let url of urls)
                   try { await cache.delete(url) } catch (_) { console.log('did not delete =(') }
             }
