@@ -21,13 +21,19 @@ export function init(): Express {
          deleteCache: true
       })
       .get({
+         route: '/api/items',
+         logic: () => crud.itemsReadAll(pool),
+         getCache: true,
+         cacheExpires: 0,
+      })
+      .get({
          route: '/api/items/:itemsID([0-9]+)',
          logic: (params) => crud.itemsRead(pool, params.itemsID),
          getCache: true
       })
       .get({
          route: '/api/items/:name',
-         logic: (params) => crud.itemsRead(pool, params.name),
+         logic: (params) => crud.itemsReadByName(pool, params.name),
          getCache: true
       })
       

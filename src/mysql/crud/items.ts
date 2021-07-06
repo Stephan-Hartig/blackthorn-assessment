@@ -12,6 +12,10 @@ export async function itemsRead(pool: mysql.Pool, itemsID: number): Promise<tabl
    return prepared.items.read_byItemsID(pool, itemsID);
 }
 
-export async function itemsReadByName(pool: mysql.Pool, name: string): Promise<tableTypes.Item> {
-   return prepared.items.read_byName(pool, name);
+export async function itemsReadByName(pool: mysql.Pool, name: string): Promise<tableTypes.Item[]> {
+   return prepared.items.read_many_byPartialName(pool, name);
+}
+
+export async function itemsReadAll(pool: mysql.Pool): Promise<tableTypes.Item[]> {
+   return prepared.items.read_all(pool);
 }

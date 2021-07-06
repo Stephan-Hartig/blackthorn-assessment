@@ -7,6 +7,7 @@
     "test": "jasmine",
     "build": "tsc",
     "start": "node dist/app.js",
+    "bench": "locust spec/bench/locust.py --",
     "create-mysql-tables": "node scripts/create-mysql-tables.js"
   },
   "keywords": [

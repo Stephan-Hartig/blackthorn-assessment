@@ -59,6 +59,41 @@ export async function read_byName(pool: mysql.Pool, name: string): Promise<table
    });
 }
 
+export async function read_many_byPartialName(pool: mysql.Pool, name: string): Promise<tableTypes.Item[]> {
+   return new Promise<tableTypes.Item[]>((resolve, reject) => {
+      let sql = `
+         SELECT * FROM Items
+         WHERE (lower(name) LIKE ?)
+      `;
+      pool.execute(sql, [name.toLowerCase() + '%'], (err, results) => {
+         if (err)
+            return reject(err);
+   
+         if (results == null || (results as mysql.RowDataPacket).length == 0)
+            return reject(new CrudError(StatusCode.NotFound, 'No such rows.'));
+   
+         resolve(results as tableTypes.Item[]);
+      });
+   });
+}
+
+export async function read_all(pool: mysql.Pool): Promise<tableTypes.Item[]> {
+   return new Promise<tableTypes.Item[]>((resolve, reject) => {
+      let sql = `
+         SELECT * FROM Items
+      `;
+      pool.execute(sql, (err, results) => {
+         if (err)
+            return reject(err);
+         
+         if (results == null || (results as mysql.RowDataPacket).length == 0)
+            return reject(new CrudError(StatusCode.NotFound, 'No such rows.'));
+         
+         resolve(results as tableTypes.Item[]);
+      });
+   });
+}
+
 export async function update_name_byItemsID(pool: mysql.Pool, itemsID: number, name: string): Promise<void> {
    return new Promise<void>((resolve, reject) => {
       let sql = `
