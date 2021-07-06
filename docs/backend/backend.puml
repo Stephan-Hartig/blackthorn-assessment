@@ -1,8 +1,10 @@
 @startuml
 
-title Project
+title Backend
 
 database "MySQL (JawsDB)" as mysql
+
+database "Memcached (MemCashier)" as cache
 
 node Node {
    rectangle "Prepared SQL statements" as orm
@@ -14,6 +16,7 @@ cloud "Web (Heroku)" as web
 
 web --> router
 router --> crud
+router --> cache
 crud --> orm
 orm --> mysql
 
